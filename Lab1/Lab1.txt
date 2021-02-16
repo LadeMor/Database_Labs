@@ -1,3 +1,5 @@
+DROP DATABASE Lab1
+
 CREATE TABLE Books (
 	Number SMALLINT(10) CHECK (Number > 0),
     CodeBooks INT(10)NOT NULL,
