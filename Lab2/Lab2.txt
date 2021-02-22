@@ -1,0 +1,18 @@
+SELECT Number, CodeBooks, New, Name, Price, Pages FROM books;
+SELECT * FROM books;
+SELECT CodeBooks, Name, New, Pages, Price, Number FROM books;
+SELECT * FROM books LIMIT 10;
+SELECT DISTINCT CondeBooks FROM books;
+SELECT * FROM books WHERE New='Yes';
+SELECT * FROM books WHERE New='Yes' AND Price>20 AND Price<30;
+SELECT * FROM books WHERE New='Yes' AND Price>30 OR Price<20 AND New='Yes';
+SELECT * FROM books WHERE Pages>300 AND Pages<400 AND Price>20 AND Price<30;
+SELECT Name FROM books WHERE DatePublicshed BETWEEN '2000-01-01' AND '2000-03-01';
+SELECT * FROM books WHERE CodeBooks IN(5110, 5141, 4985, 4241);
+SELECT Name FROM books WHERE YEAR(DatePublicshed) IN(1999, 2001, 2003, 2005);
+SELECT * FROM books WHERE Name BETWEEN 'А%' AND 'К%';
+SELECT * FROM books WHERE Name LIKE 'АПП%' AND YEAR(DatePublicshed)=2000 AND Price<=20;
+SELECT * FROM books WHERE Name LIKE 'АПП%' AND Name LIKE '%е' AND DatePublicshed BETWEEN '2000-01-01' AND '2000-07-01';
+SELECT * FROM books WHERE Name LIKE '%Microsoft%' AND Name NOT LIKE '%Windows%';
+SELECT * FROM books WHERE Name REGEXP '[0-9]';
+SELECT * FROM books WHERE Name REGEXP '[0-9]{3}';
