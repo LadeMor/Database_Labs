@@ -1,0 +1,18 @@
+`Number``CodeBooks``New``Name``Price``Publiched``Pages``Format``DatePublicshed``Сrculation``Theme``Category`
+SELECT COUNT(Number), SUM(Price), AVG(Price), MIN(Price), MAX(Price), FROM books;
+SELECT COUNT(Number) FROM books WHERE Price IS NOT NULL;
+SELECT COUNT(Number), SUM(Price), AVG(Price), MIN(Price), MAX(Price), FROM books GROUP BY New;
+SELECT YEAR(DatePublicshed), COUNT(Number), SUM(Price), AVG(Price), MIN(Price), MAX(Price), FROM books GROUP BY YEAR(DatePublicshed);
+SELECT YEAR(DatePublicshed), COUNT(Number), SUM(Price), AVG(Price), MIN(Price), MAX(Price) FROM base WHERE Price BETWEEN 10 AND 20 GROUP BY YEAR(DatePublicshed);
+SELECT YEAR(DatePublicshed), COUNT(Number), SUM(Price), AVG(Price), MIN(Price), MAX(Price) FROM base GROUP BY YEAR(DatePublicshed) ORDER BY COUNT(Number) DESC;
+SELECT COUNT(CodeBooks), COUNT(DISTINCT CodeBooks) FROM books;
+SELECT LEFT(Name,1), COUNT(CodeBooks), SUM(Pricce) FROM books GROUP BY LEFT(Name,1);
+SELECT LEFT(Name,1), COUNT(CodeBooks), SUM(Price) FROM books WHERE LEFT(Name,1) BETWEEN 'А' AND 'Я' GROUP BY LEFT(Name,1);
+SELECT LEFT(Name,1), COUNT(CodeBooks), SUM(Price) FROM books WHERE YEAR(DatePublicshed)>2000 AND LEFT(Name,1) BETWEEN 'А' AND 'Я' GROUP BY LEFT(Name,1);
+SELECT LEFT(Name,1), COUNT(CodeBooks), SUM(Price) FROM books WHERE YEAR(DatePublicshed)>2000 AND LEFT(Name,1) BETWEEN 'А' AND 'Я' GROUP BY LEFT(Name,1) DESC;
+SELECT YEAR(DatePublicshed), MONTH(DatePublicshed), COUNT(Number), SUM(Price), AVG(Price), MIN(Prcie), MAX(Price) FROM books GROUP BY YEAR(DatePublicshed), MONTH(DatePublicshed);
+SELECT YEAR(DatePublicshed), MONTH(DatePublicshed), COUNT(Number), SUM(Price), AVG(Price), MIN(Price), MAX(Price) FROM books WHERE DatePublicshed IS NOT NULL GROUP BY YEAR(DatePublicshed), MONTH(DatePublicshed);
+SELECT YEAR(DatePublicshed), MONTH(DatePublicshed), COUNT(Number), SUM(Price), AVG(Price), MIN(Price), MAX(Price) FROM books GROUP BY YEAR(DatePublicshed) DESC, MONTH(DatePublicshed) ASC;
+SELECT Publiched, COUNT(Number), SUM(Price), AVG(Price), MIN(Price), MAX(Price) FROM books GROUP BY Publiched;
+SELECT Publiched, Theme, COUNT(Number), SUM(Price), AVG(Price), MIN(Price), MAX(Price) FROM books GROUP BY Publiched, Theme ORDER BY Publiched;
+SELECT Category, Theme, Publiched, COUNT(Number), SUM(Price), AVG(Price), MIN(Price), MAX(Price) FROM books GROUP BY Category, Theme, Publiched ORDER BY Publiched, Theme, Category;
