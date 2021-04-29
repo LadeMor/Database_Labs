@@ -1,0 +1,85 @@
+ALTER TABLE books
+ADD ID_publish INT(1),
+ADD ID_theme INT(1),
+ADD ID_category INT(1),
+ADD ID_format INT(1);
+
+CREATE TABLE books_theme(
+	ID_theme int(1) PRIMARY KEY,
+    	Theme varchar(30)
+)
+
+CREATE TABLE books_fomat(
+	ID_format int(1) PRIMARY KEY,
+    Fomat varchar(30)
+)
+
+CREATE TABLE books_category(
+	ID_category int(1) PRIMARY KEY,
+    Category varchar(30)
+)
+
+CREATE TABLE books_publisher(
+	ID_publisher int(1) PRIMARY KEY,
+    Publisher varchar(30)
+)
+
+INSERT INTO books_publisher(ID_publisher,Publisher)
+VALUES
+(1,'Азбука'),
+(2,'Тентакл хаус'),
+(3,'Хадзимэ Исаяма'),
+(4,'Гривна'),
+(5,'MySoft'),
+(6,'OtterSoft'),
+(7,'Триумф'),
+(8,'Эком'),
+(9,'Редакция Харьков')
+
+INSERT INTO books_category(ID_category,Category)
+VALUES
+(1,'Hardware'),
+(2,'Підручники'),
+(3,'Аппаратні засоби'),
+(4,'Компьютерні технології'),
+(5,'Soft'),
+(6,'Мови програмування'),
+(7,'Паттерни'),
+(8,'Структури'),
+(9,'Бази данних')
+
+INSERT INTO books_theme(ID_theme,Theme)
+VALUES
+(1,'Основні роботи с ПК'),
+(2,'Аппаратні засоби та їх проектування'),
+(3,'Java'),
+(4,'Паттерн Будівельник'),
+(5,'Мова С++'),
+(6,'Класси'),
+(7,'ООП'),
+(8,'Структури данних'),
+(9,'Розробка софту')
+
+INSERT INTO books_format(ID_format,Fomat)
+VALUES
+(1,'70x100/17'),
+(2,'90x80/20'),
+(3,'20x10/12'),
+(4,'120x30/90'),
+(5,'30x40/20'),
+(6,'10x30/10'),
+(7,'15x20/30'),
+(8,'40x90/30'),
+(9,'30x10/19')
+
+ALTER TABLE books
+ADD FOREIGN KEY (`ID_format`) REFERENCES books_fomat(ID_format);
+
+ALTER TABLE books
+ADD FOREIGN KEY (`ID_category`) REFERENCES books_category(ID_category);
+
+ALTER TABLE books
+ADD FOREIGN KEY (`ID_publish`) REFERENCES books_publisher(ID_publisher);
+
+ALTER TABLE books
+ADD FOREIGN KEY (`ID_theme`) REFERENCES books_theme(ID_theme);
