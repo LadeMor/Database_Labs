@@ -1,0 +1,15 @@
+SELECT books.Name, books.Price, books_publisher.Publisher FROM books, books_publisher WHERE books.ID_publish=books_publisher.ID_publisher;
+SELECT books.Name, books_category.Category FROM books INNER JOIN books_category ON books_category.ID_category=books.CodeBooks;
+SELECT Name, Price, books_publisher.Publisher, books_fomat.Format FROM books, books_publisher, books_fomat;
+SELECT books_theme.Theme, books_category.Category, books.Name, books_publisher.Publisher FROM books_theme, books_category, books INNER JOIN books_category, books_theme ON books_category.Id_category=books.CodeBooks ORDER BY books_theme.Theme ASC, books_category.Category ASC;
+SELECT books.Name, books_publisher.Publisher FROM books, books_publisher WHERE books_publisher.Publisher='BHV' AND books.DatePublicshed <= 2000-12-31;
+SELECT AVG(books.Price) INNER JOIN books_theme ON books_theme.ID_theme = books.ID_theme FROM books, books_theme WHERE books_theme.Theme = 'Використання ПК' OR books_theme.Theme = 'Linux';
+SELECT * FROM books, books_theme, books_publisher, books_category, books_fomat WHERE books.CodeBook = books_theme.ID_theme;
+SELECT * FROM books, books_theme, books_publisher, books_category, books_fomat INNER JOIN books_theme ON books.CodeBook = books_theme.ID_theme;
+SELECT * FROM books, books_theme, books_publisher, books_category, books_fomat LEFT JOIN books_theme ON books.CodeBook = books_theme.ID_theme;
+SELECT a.Name, a.Pages, b.Name FROM books AS a, books AS b WHERE a.CodeBooks!=b.CodeBooks AND a.Pages=b.Pages;
+SELECT books.Name, books_category.Category FROM books, books_category WHERE books.CodeBooks IN(SELECT CodeBooks FROM books WHERE Category LIKE '%C++%');
+SELECT books_publisher.Publisher FROM books, books_publisher WHERE books_publisher.ID_publisher IN(SELECT Publisher FROM books WHERE books.Pages>=400);
+SELECT * FROM books WHERE EXIST (SELECT * FROM books WHERE Publisher LIKE '%BHV%') AND Publisher LIKE '%BHV%';
+
+
