@@ -1,0 +1,95 @@
+DELIMITER $$
+CREATE TRIGGER tr1 BEFORE INSERT ON books_theme
+FOR EACH ROW
+BEGIN
+IF(SELECT COUNT(ID_theme) FROM books_theme)>9
+THEN 
+SIGNAL SQLSTATE '45000' 
+SET MESSAGE_TEXT = 'Themes less than 10.';
+END IF;
+END $$
+
+####################################################
+
+DELIMITER $$
+CREATE TRIGGER tr2 AFTER INSERT ON books
+FOR EACH ROW BEGIN
+IF (YEAR(new.DatePublish)!=YEAR(CURRENT_DATE))
+THEN BEGIN
+	INSERT INTO books SET New='No';
+END; 
+END IF; 
+
+END $$
+
+####################################################
+
+DELIMITER $$
+CREATE TRIGGER tr3 AFTER INSERT ON books
+FOR EACH ROW
+BEGIN
+IF(NEW.Price>NEW.Pages*10) THEN
+	INSERT INTO books SET Price = Pages/10; 
+END IF;
+END $$
+
+####################################################
+
+DELIMITER $$
+CREATE TRIGGER tr4 AFTER INSERT ON books
+FOR EACH ROW
+BEGIN
+IF(NEW.ID_publisher=1, NEW.Publisher<5000) THEN
+	DELETE FROM nbase;
+END IF;
+IF(NEW.ID_publisher=5, NEW.Publisher<10000) THEN
+	DELETE FROM books;
+END IF;
+END $$
+
+####################################################
+
+
+DELIMITER $$
+CREATE TRIGGER tr6 BEFORE DELETE ON books
+FOR EACH ROW
+BEGIN
+IF(CURRENT_USER!='dbo') THEN
+	SIGNAL SQLSTATE '45000' 
+	SET MESSAGE_TEXT = 'Non accepted user.';
+END IF;
+END $$
+
+####################################################
+
+DELIMITER $$
+CREATE TRIGGER tr7 BEFORE UPDATE ON books
+FOR EACH ROW
+BEGIN
+IF(CURRENT_USER='dbo', OLD.Cost!=NEW.Price) THEN
+	SIGNAL SQLSTATE '45000' 
+	SET MESSAGE_TEXT = 'Non accepted user.';
+END IF;
+END $$
+
+####################################################
+
+DELIMITER $$
+CREATE TRIGGER tr8 AFTER INSERT ON books
+FOR EACH ROW
+BEGIN
+IF(NEW.ID_publisher=6 OR NEW.ID_publisher=8) THEN 
+DELETE FROM books;
+END IF;
+END $$
+
+####################################################
+
+DELIMITER $$
+CREATE TRIGGER tr9 AFTER INSERT ON books
+FOR EACH ROW
+BEGIN
+IF(NEW.ID_publisher=1, NEW.ID_fomat=3) THEN
+DELETE FROM books;
+END IF;
+END $$
