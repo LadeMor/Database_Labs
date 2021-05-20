@@ -1,0 +1,35 @@
+CREATE PROCEDURE p1()
+SELECT books.CodeBooks, books.Name, books.Price, books_publisher.Publisher, books_fomat.Fomat FROM books, books_publisher, book_fomat WHERE books_publisher.ID_publisher=books.CodeBooks AND books_fomat.ID_fomat=books.CodeBooks;
+
+CALL p1();
+
+/////////////////////////////////////////////////////////////////////////////////
+CREATE PROCEDURE p2(IN theme VARCHAR(30), IN categ VARCHAR(30))
+SELECT books_theme.Theme, books_category.Category, books.Name, books_publisher.Publisher FROM books, books_theme, books_publisher, books_category WHERE book_theme.ID_theme=books.books.ID_theme AND books_publisher.ID_publisher AND books_category.ID_category AND books_theme.Theme LIKE theme AND books_category.Category LIKE categ;
+
+CALL p2();
+
+/////////////////////////////////////////////////////////////////////////////////
+CREATE PROCEDURE p3()
+SELECT books.Name, books_publiher.Publisher, books.DatePublished FROM books, books_publisher WHERE books.ID_publisher=books_publisher.ID_publisher AND books_publisher.Publisher LIKE '%BHV%' AND YEAR(DatePublished)>2000;
+
+CALL p3();
+
+/////////////////////////////////////////////////////////////////////////////////
+CREATE PROCEDURE p4()
+SELECT books_category.Category, SUM(books.Pages) FROM books, books_category WHERE books.ID_category=books_category.ID_category GROUP BY books_category.Category ORDER BY SUM(books.Pages);
+
+CALL p4();
+
+/////////////////////////////////////////////////////////////////////////////////
+CREATE PROCEDURE p5()
+SELECT AVG(books.Price) INTO avgprice FROM books_category, books_theme, books WHERE books.ID_category=books_category.ID_category AND books.ID_category=books_theme.ID_theme AND books_theme LIKE '%ПК%' AND books_category.Category LIKE '%Linux%';
+
+CALL p5();
+
+/////////////////////////////////////////////////////////////////////////////////
+CREATE PROCEDURE p6()
+SELECT books.*, books_publisher.Publisher, books_fomat.Fomat, books_theme.Theme, books_category.Category FROM books, books_publisher, books_category, books_theme, books_fomat WHERE books.ID_publisher=books_publisher.ID_publisher, books.ID_theme=books_theme.ID_theme, books.ID_fomat=books_fomat.ID_fomat, books.ID_category=books_category.ID_category
+
+CALL p6();
+
