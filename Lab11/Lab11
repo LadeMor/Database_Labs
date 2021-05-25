@@ -1,1 +1,109 @@
+CREATE DATABASE medical;
 
+CREATE TABLE diagnosis
+(
+  id SMALLINT(2) NOT NULL UNIQUE AUTO_INCREMENT,
+  diagnosis VARCHAR(25),
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE methods
+(
+  id SMALLINT(2) NOT NULL UNIQUE AUTO_INCREMENT,
+  method VARCHAR(25),
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE patients
+(
+  id SMALLINT(5) NOT NULL UNIQUE AUTO_INCREMENT,
+  name VARCHAR(25),
+  lastname VARCHAR(25),
+  born_date DATE,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE medcards
+(
+  id SMALLINT(5) NOT NULL UNIQUE AUTO_INCREMENT,
+  patient_id SMALLINT(5),
+  date DATE,
+  diag_id SMALLINT(2),
+  method_id SMALLINT(2),
+  PRIMARY KEY(id),
+  FOREIGN KEY(diag_id) REFERENCES diagnosis(id),
+  FOREIGN KEY(method_id) REFERENCES methods(id),
+  FOREIGN KEY(patient_id) REFERENCES patients(id)
+);
+
+INSERT INTO patients (name, lastname, born_date) VALUE
+('Марцин', 'Цихонь', '1994/03/09'),
+('Марцин', 'Якубовский', '1984/02/12'),
+('Луция', 'Смолиньская', '1990/05/09'),
+('Хенрика', 'Стефаньская', '2000/01/11'),
+('Дорота', 'Сова', '1992/08/23'),
+('Ксаверий', 'Ковалик', '2001/09/14'),
+('Юлиуш', 'Скжипчак', '1976/07/19'),
+('Корнелия', 'Влодарчик', '1986/04/04'),
+('Зофия', 'Врона', '1973/09/02'),
+('Эрен', 'Егер', '1993/11/28'),
+('Лидия', 'Дуда', '1963/12/30'),
+('Микаса', 'Акерман', '2002/04/22'),
+('Адам', 'Беднарский', '2001/07/11'),
+('Джотаро', 'Куджо', '1990/06/12'),
+('Владислав', 'Журек', '2002/01/19');
+
+INSERT INTO diagnosis(diagnosis)
+VALUES
+('Грипп'),
+('Колеоптерозы'),
+('Лучевая болезнь'),
+('Болезнь Пика'),
+('Бубонная чума'),
+('Дерматоз'),
+('Люмбаго'),
+('Волчанка');
+
+INSERT INTO methods(method)
+VALUES 
+('Госпитализация'),
+('Реанимация'),
+('Лоботомия'),
+('Препараты'),
+('Капельница'),
+('Постельный режим');
+
+INSERT INTO medcards(patient_id, date, diag_id, method_id) VALUES
+(1, '2012/05/13', 3, 4),
+(2, '2016/03/10', 5, 6),
+(3, '2010/08/24', 8, 3),
+(4, '2018/10/03', 4, 2),
+(5, '2008/02/26', 1, 5),
+(6, '2019/11/12', 7, 1),
+(2, '2018/05/13', 2, 4),
+(7, '2010/04/25', 5, 2),
+(8, '2009/01/07', 8, 6),
+(9, '2021/01/20', 1, 3),
+(5, '2014/12/02', 4, 3),
+(10, '2017/11/12', 1, 6),
+(11, '2004/09/02', 5, 5),
+(12, '2007/10/09', 2, 1),
+(13, '2016/04/22', 2, 5),
+(14, '2017/01/13', 7, 4),
+(3, '2012/03/04', 3, 2),
+(15, '2016/05/12', 4, 3);
+
+CREATE PROCEDURE ShowAll()
+SELECT medcards.date, patients.name, patients.lastname, patients.born_date, diagnosis.diagnosis, methods.method FROM medcards, patients, diagnosis, methods WHERE medcards.patient_id=patients.id AND medcards.diag_id=diagnosis.id AND medcards.method_id=methods.id ORDER BY medcards.date ASC;
+
+CREATE PROCEDURE ShowByDiagnosis(IN diag VARCHAR(25))
+SELECT diagnosis.diagnosis, medcards.date, patients.name, patients.lastname, patients.born_date, methods.method FROM medcards, patients, diagnosis, methods WHERE medcards.patient_id=patients.id AND medcards.diag_id=diagnosis.id AND medcards.method_id=methods.id AND diagnosis.diagnosis LIKE diag;
+
+CREATE PROCEDURE ShowByMethods(IN meth VARCHAR(25))
+SELECT methods.method, medcards.date, patients.name, patients.lastname, patients.born_date, diagnosis.diagnosis FROM medcards, patients, diagnosis, methods WHERE medcards.patient_id=patients.id AND medcards.diag_id=diagnosis.id AND medcards.method_id=methods.id AND methods.method LIKE meth;
+
+CREATE PROCEDURE CountByDiagnosis(IN diag VARCHAR(25))
+SELECT diagnosis.diagnosis, COUNT(medcards.id) FROM diagnosis, medcards WHERE medcards.diag_id=diagnosis.id AND diagnosis.diagnosis LIKE diag;
+
+CREATE PROCEDURE CountByMethod(IN meth VARCHAR(25))
+SELECT methods.method, COUNT(medcards.id) FROM methods, medcards WHERE medcards.method_id=methods.id AND methods.method LIKE meth;
